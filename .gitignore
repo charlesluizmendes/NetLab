@@ -9,9 +9,9 @@ __pycache__/
 # Virtual environment
 venv/
 
+# VSCode
+.vscode
+
 # Outros
 *.log
 .DS_Store
-
-# VSCode
-.vscode
