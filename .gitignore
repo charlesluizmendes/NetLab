@@ -12,8 +12,9 @@ venv/
 # VSCode
 .vscode
 
+# Docs
+docs/
+
 # Outros
 *.log
 .DS_Store
-
-proposta.txt
