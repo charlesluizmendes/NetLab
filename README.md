@@ -34,7 +34,7 @@ OPENAI_API_KEY=sua-chave-da-api
 OPENAI_MODEL=gpt-4.1-mini
 ```
 
-O notebook pede a chave durante a execução se ela não estiver no `.env`. Não compartilhe nem publique sua chave. O `.env` está no `.gitignore`.
+O notebook pede a chave durante a execução se ela não estiver no `.env`.
 
 ## Execução
 
