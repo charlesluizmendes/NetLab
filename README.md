@@ -8,9 +8,11 @@ A pesquisa usa a API de Dados Abertos da Câmara para coletar ementas de projeto
 
 Na etapa de limpeza, o notebook remove registros sem ID, tipo, data ou ementa e elimina proposições duplicadas. Em seguida, seleciona ementas que contêm ao menos um termo relacionado à tecnologia e um termo relacionado ao meio ambiente.
 
-O TF-IDF transforma as ementas selecionadas em números e destaca os termos mais relevantes do conjunto. O GPT participa da análise classificando cada proposição como relação ambiental direta, indireta, ausente ou incerta, indicando os temas, resumindo a abordagem e copiando uma evidência literal da ementa.
+O TF-IDF destaca os termos que ajudam a caracterizar cada ementa, considerando sua frequência no texto e no conjunto de ementas.
 
-A validação registra a quantidade de dados coletados, dados incompletos, duplicatas, proposições limpas e candidatos selecionados. Depois da classificação, o notebook verifica se a evidência informada pelo GPT aparece na ementa. A análise é exploratória, pois depende das palavras-chave e de textos resumidos; ela não mede impactos ambientais reais nem substitui a leitura do inteiro teor.
+O GPT recebe as ementas e classifica cada proposição como relação ambiental direta, indireta, ausente ou incerta, indicando os temas, resumindo a abordagem e copiando uma evidência literal da ementa.
+
+A validação registra a quantidade de dados coletados, dados incompletos, duplicatas, proposições limpas e candidatos selecionados. Depois da classificação, o notebook faz uma segunda avaliação de cada ementa sem mostrar a resposta anterior, compara as categorias e os temas e verifica os trechos citados. Divergências, incertezas e evidências não encontradas ficam sinalizadas para conferência humana. Respostas incompletas interrompem a etapa, como na classificação. A concordância entre duas avaliações do mesmo modelo não garante acerto. Essa revisão faz uma chamada adicional por proposição; os gráficos preservam as classificações originais e apresentam a contagem de pendências. A análise é exploratória, pois depende das palavras-chave e de textos resumidos; ela não mede impactos ambientais reais nem substitui a leitura do inteiro teor.
 
 ## Instalação
 
@@ -41,10 +43,10 @@ Abra `src/proposicoes.ipynb` no Jupyter, VS Code ou Google Colab e execute as c�
 ## Etapas
 
 - `01_coleta`: consulta as proposições na API da Câmara e salva `proposicoes_brutas.csv`.
-- `02_limpeza`: remove registros incompletos e duplicados e salva `candidatos_gpt.csv`.
+- `02_limpeza`: remove registros incompletos e duplicados, seleciona as ementas e calcula o TF-IDF. Salva as ementas, os termos e seus pesos em um único arquivo: `candidatos_tfidf.csv`.
 - `03_classificacao`: classifica as ementas com o modelo OpenAI e salva `classificacoes_gpt.csv`.
-- `04_revisao`: confere as classificações e salva `revisao_resultados.csv`.
-- `05_visualizacao`: cria os gráficos e salva os termos TF-IDF.
+- `04_revisao`: faz uma segunda classificação, compara as respostas e verifica as evidências. Salva tudo em `revisao_resultados.csv`, com as pendências indicadas na coluna `review_status`.
+- `05_visualizacao`: cria os gráficos das classificações e dos termos calculados na limpeza.
 
 Os arquivos são salvos dentro da pasta `outputs`.
 
